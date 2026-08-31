@@ -295,6 +295,49 @@ export const faq = [
   },
 ];
 
+export const instagramPhotos = [
+  {
+    image: "/instagram/ceramic-morning-cups.jpg",
+    alt: "Handcrafted ceramic mugs and keepsake plaque on wooden tray in morning sun",
+    tag: "@tintinkss",
+  },
+  {
+    image: "/instagram/ruffled-candle-holders.jpg",
+    alt: "Hand holding two ruffled floral ceramic candle stands",
+    tag: "@tintinkss",
+  },
+  {
+    image: "/instagram/floral-blossom-mug.png",
+    alt: "Hand holding a white ceramic mug painted with delicate floral blossoms",
+    tag: "@tintinkss",
+  },
+  {
+    image: "/instagram/candle-stands-spread.jpg",
+    alt: "Spread of ruffled ceramic candle holders and mini bud vases",
+    tag: "@tintinkss",
+  },
+  {
+    image: "/instagram/ceramic-pebble-pins.jpg",
+    alt: "Glazed botanical ceramic pebble accents and chopstick rests",
+    tag: "@tintinkss",
+  },
+  {
+    image: "/instagram/custom-name-hangings.jpg",
+    alt: "Personalized ceramic name charms with striped letters and jute cords",
+    tag: "@tintinkss",
+  },
+  {
+    image: "/instagram/striped-ceramic-tumbler.jpg",
+    alt: "Hand-painted cobalt striped ceramic tumbler",
+    tag: "@tintinkss",
+  },
+  {
+    image: "/instagram/studio-collection-display.jpg",
+    alt: "Studio table display with cups, bud vases, and planters",
+    tag: "@tintinkss",
+  },
+];
+
 export const footer = {
   cta: "Come find us on Instagram",
   handle: "@tintinkss",
