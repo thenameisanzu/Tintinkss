@@ -5,17 +5,10 @@ import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { site } from "@/lib/content";
 
-const THROWING_STAGES = [
-  { threshold: 0, title: "Centering the clay", subtitle: "Wetting the stoneware on the wheel head" },
-  { threshold: 25, title: "Opening the vessel", subtitle: "Pressing thumbs deep into the center" },
-  { threshold: 50, title: "Pulling the walls", subtitle: "Drawing clay upward with steady hands" },
-  { threshold: 75, title: "Shaping the rim", subtitle: "Smoothing curves and trimming the foot" },
-  { threshold: 95, title: "Fresh off the wheel", subtitle: "Ready for bisque firing in Kottayam" },
-];
-
 export default function PageLoader() {
   const [visible, setVisible] = useState(true);
   const [progress, setProgress] = useState(0);
+  const [stamped, setStamped] = useState(false);
   const [reduced, setReduced] = useState(false);
 
   useEffect(() => {
@@ -28,7 +21,7 @@ export default function PageLoader() {
 
     document.body.style.overflow = "hidden";
 
-    // Progress counter animation from 0 to 100
+    // Progress counter animation
     const interval = setInterval(() => {
       setProgress((prev) => {
         if (prev >= 100) {
@@ -36,24 +29,24 @@ export default function PageLoader() {
           setTimeout(() => {
             setVisible(false);
             document.body.style.overflow = "";
-          }, 450);
+          }, 500);
           return 100;
         }
-        const increment = prev < 30 ? 4 : prev < 75 ? 3 : 2;
+        if (prev >= 45 && !stamped) {
+          setStamped(true);
+        }
+        const increment = prev < 40 ? 4 : prev < 75 ? 3 : 2;
         return Math.min(prev + increment, 100);
       });
-    }, 38);
+    }, 36);
 
     return () => {
       clearInterval(interval);
       document.body.style.overflow = "";
     };
-  }, []);
+  }, [stamped]);
 
   if (reduced) return null;
-
-  const currentStage =
-    [...THROWING_STAGES].reverse().find((s) => progress >= s.threshold) || THROWING_STAGES[0];
 
   return (
     <AnimatePresence>
@@ -62,129 +55,148 @@ export default function PageLoader() {
           initial={{ opacity: 1 }}
           exit={{
             opacity: 0,
-            scale: 1.06,
-            filter: "blur(4px)",
+            scale: 1.04,
+            filter: "blur(6px)",
             transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] },
           }}
           className="fixed inset-0 z-[200] flex items-center justify-center bg-[#F7F4EE] select-none pointer-events-auto overflow-hidden px-6"
         >
-          {/* Ambient Warm Studio Lighting */}
-          <div className="absolute w-[500px] h-[500px] bg-rust/10 rounded-full blur-[100px] pointer-events-none" />
-          <div className="absolute w-[350px] h-[350px] bg-sage/15 rounded-full blur-[90px] -top-20 -left-20 pointer-events-none" />
+          {/* Subtle Ambient Studio Clay Glow */}
+          <div className="absolute w-[500px] h-[500px] bg-rust/10 rounded-full blur-[110px] pointer-events-none" />
+          <div className="absolute w-[300px] h-[300px] bg-sage/15 rounded-full blur-[90px] -bottom-10 -right-10 pointer-events-none" />
 
-          {/* Main Wheel Container */}
+          {/* Central Ceramic Sketch & Stamp Container */}
           <div className="relative flex flex-col items-center max-w-sm w-full">
             
-            {/* The Potter's Wheel Centerpiece */}
-            <div className="relative w-48 h-48 sm:w-56 sm:h-56 flex items-center justify-center">
+            {/* SVG Hand-Drawn Ceramic Vessel & Flora Illustration */}
+            <div className="relative w-44 h-44 sm:w-52 sm:h-52 flex items-center justify-center">
               
-              {/* Concentric Clay Throwing Ripples (expanding outwards) */}
-              {[0, 1, 2].map((idx) => (
-                <motion.div
-                  key={idx}
-                  className="absolute inset-0 rounded-full border border-rust/35 pointer-events-none"
-                  animate={{
-                    scale: [0.75, 1.45],
-                    opacity: [0.65, 0],
-                  }}
-                  transition={{
-                    duration: 2.4,
-                    repeat: Infinity,
-                    ease: "easeOut",
-                    delay: idx * 0.8,
-                  }}
+              <svg
+                viewBox="0 0 200 200"
+                className="w-full h-full absolute inset-0 pointer-events-none drop-shadow-sm overflow-visible"
+              >
+                {/* Outer delicate guide halo */}
+                <motion.circle
+                  cx="100"
+                  cy="100"
+                  r="88"
+                  fill="none"
+                  stroke="#B8542F"
+                  strokeWidth="1"
+                  strokeDasharray="4 6"
+                  strokeOpacity="0.35"
+                  initial={{ rotate: 0 }}
+                  animate={{ rotate: 360 }}
+                  transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
                 />
-              ))}
 
-              {/* Spinning Wheel Head Disc */}
-              <motion.div
-                className="absolute inset-0 rounded-full border border-clay-300/60 bg-gradient-to-b from-[#ECE7DF] to-[#E2DDD3] shadow-[0_15px_35px_rgba(44,36,32,0.1)] flex items-center justify-center p-3"
-                animate={{ rotate: 360 }}
-                transition={{ duration: 6, repeat: Infinity, ease: "linear" }}
-              >
-                {/* Lathe Ring Grooves on Wheel Head */}
-                <svg viewBox="0 0 200 200" className="w-full h-full pointer-events-none opacity-40">
-                  <circle cx="100" cy="100" r="92" fill="none" stroke="#B8542F" strokeWidth="1" strokeDasharray="6 4" />
-                  <circle cx="100" cy="100" r="76" fill="none" stroke="#685E57" strokeWidth="0.8" />
-                  <circle cx="100" cy="100" r="60" fill="none" stroke="#B8542F" strokeWidth="0.8" strokeDasharray="3 3" />
-                  <circle cx="100" cy="100" r="44" fill="none" stroke="#685E57" strokeWidth="0.5" />
-                </svg>
-              </motion.div>
+                {/* Hand-drawn Ceramic Vase Outline (Drawn in real-time) */}
+                <motion.path
+                  d="M 68 55 C 68 70, 60 85, 52 110 C 44 135, 56 160, 100 160 C 144 160, 156 135, 148 110 C 140 85, 132 70, 132 55 C 132 48, 120 45, 100 45 C 80 45, 68 48, 68 55 Z"
+                  fill="none"
+                  stroke="#B8542F"
+                  strokeWidth="2.2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  initial={{ pathLength: 0, opacity: 0 }}
+                  animate={{ pathLength: 1, opacity: 0.85 }}
+                  transition={{ duration: 1.6, ease: [0.65, 0, 0.35, 1] }}
+                />
 
-              {/* Centered Tintinkss Logo Medallion */}
+                {/* Botanical Wildflower Stem emerging from vessel */}
+                <motion.path
+                  d="M 100 45 Q 105 25, 115 15 M 104 32 Q 116 30, 120 24 M 98 22 Q 88 18, 86 12"
+                  fill="none"
+                  stroke="#7A8B78"
+                  strokeWidth="1.8"
+                  strokeLinecap="round"
+                  initial={{ pathLength: 0, opacity: 0 }}
+                  animate={{ pathLength: 1, opacity: 0.9 }}
+                  transition={{ delay: 0.4, duration: 1.2, ease: "easeOut" }}
+                />
+
+                {/* Delicate vessel base line */}
+                <motion.path
+                  d="M 80 166 L 120 166"
+                  stroke="#2C2420"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                  strokeOpacity="0.4"
+                  initial={{ pathLength: 0 }}
+                  animate={{ pathLength: 1 }}
+                  transition={{ delay: 0.8, duration: 0.6 }}
+                />
+              </svg>
+
+              {/* Tintinkss Seal Logo - Tactile Ink Stamp Drop */}
               <motion.div
-                initial={{ scale: 0.85, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                transition={{ duration: 0.5, ease: "easeOut" }}
-                className="relative z-10 w-24 h-24 sm:w-28 sm:h-28 rounded-full bg-porcelain p-1.5 shadow-[0_8px_25px_rgba(44,36,32,0.18)] border-2 border-rust/40 flex items-center justify-center"
+                initial={{ scale: 0, opacity: 0, y: -20, rotate: -15 }}
+                animate={{
+                  scale: stamped ? 1 : 0,
+                  opacity: stamped ? 1 : 0,
+                  y: stamped ? 0 : -20,
+                  rotate: stamped ? 0 : -15,
+                }}
+                transition={{
+                  type: "spring",
+                  stiffness: 400,
+                  damping: 22,
+                  mass: 0.8,
+                }}
+                className="relative z-10 w-22 h-22 sm:w-26 sm:h-26 rounded-full bg-porcelain p-1.5 shadow-[0_12px_30px_rgba(184,84,47,0.22)] border-2 border-rust flex items-center justify-center"
               >
-                {/* Inner Delicate Ceramic Ring */}
-                <div className="absolute inset-1 rounded-full border border-clay-300/40 pointer-events-none" />
+                {/* Concentric stamp impression ring */}
+                <div className="absolute inset-1 rounded-full border border-rust/40 pointer-events-none" />
 
                 <Image
                   src="/logo.png"
                   alt={`${site.name} logo`}
                   fill
-                  sizes="(max-width: 768px) 96px, 112px"
+                  sizes="(max-width: 768px) 88px, 104px"
                   priority
-                  className="object-cover rounded-full p-1"
+                  className="object-cover rounded-full p-0.5"
                 />
-              </motion.div>
-
-              {/* Orbiting Clay Marker Dot */}
-              <motion.div
-                className="absolute inset-0 pointer-events-none"
-                animate={{ rotate: 360 }}
-                transition={{ duration: 2.2, repeat: Infinity, ease: "linear" }}
-              >
-                <div className="w-2.5 h-2.5 rounded-full bg-rust absolute top-2 left-1/2 -translate-x-1/2 shadow-[0_0_8px_rgba(184,84,47,0.6)]" />
               </motion.div>
             </div>
 
-            {/* Brand Title */}
-            <div className="mt-7 text-center">
+            {/* Brand Title & Handwritten Details */}
+            <motion.div
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.5, duration: 0.6 }}
+              className="mt-5 text-center flex flex-col items-center"
+            >
               <div className="flex items-baseline justify-center gap-2 font-display text-3xl sm:text-4xl text-kiln font-medium tracking-tight">
                 <span>{site.name}</span>
                 <span className="font-script text-rust text-2xl sm:text-3xl lowercase">by jia</span>
               </div>
-            </div>
+              <span className="font-script text-xl sm:text-2xl text-rust/90 mt-1">
+                handmade slowly in Kottayam
+              </span>
+            </motion.div>
 
-            {/* Dynamic Throwing Stage Narrative */}
-            <div className="mt-4 text-center h-14 flex flex-col items-center justify-center">
-              <AnimatePresence mode="wait">
+            {/* Minimal Progress Line & Milestone */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.3, duration: 0.5 }}
+              className="mt-6 w-full max-w-[220px] flex flex-col items-center"
+            >
+              <div className="w-full h-1 bg-clay-200 rounded-full overflow-hidden relative">
                 <motion.div
-                  key={currentStage.title}
-                  initial={{ opacity: 0, y: 6 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -6 }}
-                  transition={{ duration: 0.3 }}
-                  className="flex flex-col items-center"
-                >
-                  <span className="font-script text-2xl sm:text-3xl text-rust">
-                    {currentStage.title}
-                  </span>
-                  <span className="font-serif italic text-xs text-kiln/60 mt-0.5">
-                    {currentStage.subtitle}
-                  </span>
-                </motion.div>
-              </AnimatePresence>
-            </div>
-
-            {/* Clay Throwing Progress Bar & Gauge */}
-            <div className="mt-5 w-full max-w-[240px] flex flex-col items-center">
-              <div className="w-full h-1 bg-clay-200/90 rounded-full overflow-hidden relative">
-                <motion.div
-                  className="h-full bg-rust rounded-full"
+                  className="h-full bg-rust rounded-full relative"
                   style={{ width: `${progress}%` }}
                   transition={{ ease: "easeOut" }}
-                />
+                >
+                  <div className="absolute right-0 top-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-rust-light shadow-[0_0_6px_rgba(224,114,75,0.9)]" />
+                </motion.div>
               </div>
 
-              <div className="w-full flex items-center justify-between mt-2 font-mono text-[11px] text-kiln/60">
-                <span className="tracking-wider uppercase">Wheel Speed</span>
-                <span className="font-semibold text-rust">{progress}%</span>
+              <div className="w-full flex items-center justify-between mt-2 font-serif italic text-xs text-kiln/60">
+                <span>Small batch ceramics</span>
+                <span className="font-mono font-medium text-rust text-xs">{progress}%</span>
               </div>
-            </div>
+            </motion.div>
 
           </div>
         </motion.div>
