@@ -55,11 +55,12 @@ export default function CustomCursor() {
     >
       <motion.div
         animate={{
-          width: hovering ? 64 : 16,
-          height: hovering ? 64 : 16,
+          width: hovering ? 32 : 12,
+          height: hovering ? 32 : 12,
+          opacity: hovering ? 0.9 : 0.65,
         }}
-        transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-        className="rounded-full bg-porcelain"
+        transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
+        className="rounded-full bg-porcelain shadow-sm"
       />
     </motion.div>
   );
