@@ -62,38 +62,38 @@ function CollectionRow({
       viewport={{ once: true, margin: "-10%" }}
       transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1], delay: index * 0.08 }}
       style={{ rotateX: srx, rotateY: sry, transformStyle: "preserve-3d", transformPerspective: 800 }}
-      className={`group border-b border-porcelain/10 py-10 md:py-14 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 md:gap-12 relative cursor-pointer transition-colors duration-300 hover:border-rust/30 ${
+      className={`group border-b border-porcelain/10 py-8 sm:py-10 md:py-14 flex flex-col md:flex-row items-start md:items-center justify-between gap-5 sm:gap-6 md:gap-10 lg:gap-14 relative cursor-pointer transition-colors duration-300 hover:border-rust/30 w-full overflow-hidden ${
         index % 2 === 1 ? "md:flex-row-reverse md:text-right" : ""
       }`}
     >
       {/* Title & Arrow */}
-      <div className={`flex items-center gap-3.5 ${index % 2 === 1 ? "md:justify-end" : ""}`}>
-        <h3 className="font-display font-medium text-4xl md:text-6xl text-porcelain group-hover:text-rust-light transition-colors duration-300">
+      <div className={`flex items-center gap-3 sm:gap-4 shrink-0 max-w-full md:max-w-[48%] ${index % 2 === 1 ? "md:justify-end" : ""}`}>
+        <h3 className="font-display font-medium text-3xl sm:text-4xl md:text-4xl lg:text-5xl xl:text-6xl text-porcelain group-hover:text-rust-light transition-colors duration-300 tracking-tight break-words">
           {item.title}
         </h3>
         <motion.div
           animate={{
             x: hovered ? 4 : 0,
             y: hovered ? -4 : 0,
-            opacity: hovered ? 1 : 0.3,
+            opacity: hovered ? 1 : 0.35,
           }}
           transition={{ duration: 0.25 }}
           className="text-rust shrink-0"
         >
-          <ArrowUpRight size={28} />
+          <ArrowUpRight size={24} className="md:w-7 md:h-7" />
         </motion.div>
       </div>
 
       {/* Description & Action */}
-      <div className={`flex flex-col gap-3 max-w-lg ${index % 2 === 1 ? "md:items-end" : ""}`}>
-        <p className="font-display italic font-normal text-lg md:text-xl text-porcelain/75 group-hover:text-porcelain/90 leading-relaxed transition-colors duration-300">
+      <div className={`flex flex-col gap-2.5 sm:gap-3 max-w-full md:max-w-[48%] ${index % 2 === 1 ? "md:items-end" : ""}`}>
+        <p className="font-display italic font-normal text-base sm:text-lg md:text-lg lg:text-xl text-porcelain/75 group-hover:text-porcelain/90 leading-relaxed transition-colors duration-300">
           {item.description}
         </p>
-        <div className="flex items-center gap-3.5 pt-0.5">
-          <span className="font-script text-xl text-sage">
+        <div className="flex items-center gap-3 pt-0.5">
+          <span className="font-script text-lg sm:text-xl text-sage">
             {item.note}
           </span>
-          <span className="text-xs font-medium tracking-wider uppercase text-porcelain/40 group-hover:text-rust transition-colors underline-offset-4 group-hover:underline">
+          <span className="text-[11px] sm:text-xs font-medium tracking-wider uppercase text-porcelain/40 group-hover:text-rust transition-colors underline-offset-4 group-hover:underline">
             enquire piece &rarr;
           </span>
         </div>

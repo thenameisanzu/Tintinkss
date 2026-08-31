@@ -31,7 +31,7 @@ export default function Nav() {
           <a
             href="#top"
             data-cursor-hover
-            className="flex items-center gap-3 font-display text-lg md:text-xl tracking-tight text-kiln group"
+            className="flex items-center gap-3 font-display text-lg md:text-xl tracking-tight text-kiln group whitespace-nowrap shrink-0"
           >
             <Image
               src="/logo.png"
@@ -39,21 +39,21 @@ export default function Nav() {
               width={40}
               height={40}
               priority
-              className="w-8 h-8 md:w-9 md:h-9 rounded-full object-cover shadow-sm group-hover:scale-105 transition-transform duration-300"
+              className="w-8 h-8 md:w-9 md:h-9 rounded-full object-cover shadow-sm group-hover:scale-105 transition-transform duration-300 shrink-0"
             />
-            <span className="flex items-baseline">
+            <span className="flex items-baseline whitespace-nowrap">
               {site.name}
-              <span className="font-script text-rust text-xl md:text-2xl ml-1 lowercase">by jia</span>
+              <span className="font-script text-rust text-xl md:text-2xl ml-1.5 lowercase">by jia</span>
             </span>
           </a>
 
-          <nav className="hidden md:flex items-center gap-7">
+          <nav className="hidden lg:flex items-center gap-6 xl:gap-8">
             {nav.map((item) => (
               <a
                 key={item.href}
                 href={item.href}
                 data-cursor-hover
-                className="group relative text-sm font-medium text-kiln/80 hover:text-rust transition-colors py-1"
+                className="group relative text-sm font-medium text-kiln/80 hover:text-rust transition-colors py-1 whitespace-nowrap"
               >
                 {item.label}
                 <span className="absolute left-0 -bottom-0.5 h-[1.5px] w-full bg-rust origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-[cubic-bezier(0.65,0,0.35,1)]" />
@@ -63,7 +63,7 @@ export default function Nav() {
             <button
               onClick={() => openModal("commission")}
               data-cursor-hover
-              className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-rust/10 hover:bg-rust text-rust hover:text-porcelain text-xs font-semibold tracking-wide transition-all border border-rust/30 hover:scale-105 active:scale-95"
+              className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-rust/10 hover:bg-rust text-rust hover:text-porcelain text-xs font-semibold tracking-wide transition-all border border-rust/30 hover:scale-105 active:scale-95 whitespace-nowrap shrink-0"
             >
               <Sparkles size={13} />
               <span>Custom Brief</span>
@@ -74,7 +74,7 @@ export default function Nav() {
               href={site.instagram}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center justify-center w-9 h-9 rounded-full border border-kiln/20 hover:border-rust hover:text-rust transition-colors"
+              className="flex items-center justify-center w-9 h-9 rounded-full border border-kiln/20 hover:border-rust hover:text-rust transition-colors shrink-0"
               strength={0.5}
             >
               <InstagramIcon size={16} />
@@ -83,7 +83,7 @@ export default function Nav() {
 
           <button
             onClick={() => setOpen(true)}
-            className="md:hidden w-10 h-10 flex items-center justify-center"
+            className="lg:hidden w-10 h-10 flex items-center justify-center text-kiln hover:text-rust transition-colors"
             aria-label="Open menu"
           >
             <Menu size={26} />
