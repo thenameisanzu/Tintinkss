@@ -27,66 +27,73 @@ export default function Nav() {
           scrolled ? "bg-porcelain/90 backdrop-blur-sm shadow-sm" : "bg-transparent"
         }`}
       >
-        <div className="flex items-center justify-between px-6 md:px-10 py-5">
+        <div className="flex items-center justify-between px-4 sm:px-6 md:px-8 lg:px-10 py-4 md:py-5 w-full">
+          {/* Brand Logo & Name */}
           <a
             href="#top"
             data-cursor-hover
-            className="flex items-center gap-3 font-display text-lg md:text-xl tracking-tight text-kiln group whitespace-nowrap shrink-0"
+            className="flex items-center gap-2 sm:gap-2.5 md:gap-3 text-base md:text-lg lg:text-xl tracking-tight text-kiln group whitespace-nowrap shrink-0"
           >
             <Image
               src="/logo.png"
               alt={`${site.name} logo`}
-              width={40}
-              height={40}
+              width={36}
+              height={36}
               priority
-              className="w-8 h-8 md:w-9 md:h-9 rounded-full object-cover shadow-sm group-hover:scale-105 transition-transform duration-300 shrink-0"
+              className="w-7 h-7 sm:w-8 sm:h-8 md:w-9 md:h-9 rounded-full object-cover shadow-sm group-hover:scale-105 transition-transform duration-300 shrink-0"
             />
-            <span className="flex items-baseline whitespace-nowrap">
+            <span className="font-display font-medium text-kiln whitespace-nowrap inline-flex items-baseline">
               {site.name}
-              <span className="font-script text-rust text-xl md:text-2xl ml-1.5 lowercase">by jia</span>
+              <span className="font-script text-rust text-lg sm:text-xl md:text-2xl ml-1 lowercase inline-block whitespace-nowrap">
+                by jia
+              </span>
             </span>
           </a>
 
-          <nav className="hidden lg:flex items-center gap-6 xl:gap-8">
+          {/* Desktop & iPad Navigation Links */}
+          <nav className="hidden md:flex items-center gap-3 sm:gap-4 md:gap-4 lg:gap-6 xl:gap-8 shrink-0">
             {nav.map((item) => (
               <a
                 key={item.href}
                 href={item.href}
                 data-cursor-hover
-                className="group relative text-sm font-medium text-kiln/80 hover:text-rust transition-colors py-1 whitespace-nowrap"
+                className="group relative text-xs md:text-[13px] lg:text-sm font-medium text-kiln/80 hover:text-rust transition-colors py-1 whitespace-nowrap"
               >
                 {item.label}
                 <span className="absolute left-0 -bottom-0.5 h-[1.5px] w-full bg-rust origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-[cubic-bezier(0.65,0,0.35,1)]" />
               </a>
             ))}
 
+            {/* Custom Brief CTA */}
             <button
               onClick={() => openModal("commission")}
               data-cursor-hover
-              className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-rust/10 hover:bg-rust text-rust hover:text-porcelain text-xs font-semibold tracking-wide transition-all border border-rust/30 hover:scale-105 active:scale-95 whitespace-nowrap shrink-0"
+              className="inline-flex items-center gap-1.5 px-3 md:px-3.5 lg:px-4 py-1.5 md:py-2 rounded-full bg-rust/10 hover:bg-rust text-rust hover:text-porcelain text-[11px] md:text-xs font-semibold tracking-wide transition-all border border-rust/30 hover:scale-105 active:scale-95 whitespace-nowrap shrink-0"
             >
-              <Sparkles size={13} />
+              <Sparkles size={12} className="md:w-3.5 md:h-3.5" />
               <span>Custom Brief</span>
             </button>
 
+            {/* Instagram Icon */}
             <Magnetic
               as="a"
               href={site.instagram}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center justify-center w-9 h-9 rounded-full border border-kiln/20 hover:border-rust hover:text-rust transition-colors shrink-0"
+              className="flex items-center justify-center w-8 h-8 md:w-9 md:h-9 rounded-full border border-kiln/20 hover:border-rust hover:text-rust transition-colors shrink-0"
               strength={0.5}
             >
-              <InstagramIcon size={16} />
+              <InstagramIcon size={15} className="md:w-4 md:h-4" />
             </Magnetic>
           </nav>
 
+          {/* Mobile Hamburger Button (Mobile only) */}
           <button
             onClick={() => setOpen(true)}
-            className="lg:hidden w-10 h-10 flex items-center justify-center text-kiln hover:text-rust transition-colors"
+            className="md:hidden w-9 h-9 flex items-center justify-center text-kiln hover:text-rust transition-colors"
             aria-label="Open menu"
           >
-            <Menu size={26} />
+            <Menu size={24} />
           </button>
         </div>
       </header>
