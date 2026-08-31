@@ -14,7 +14,7 @@ const categoryMap: Record<string, string> = {
   "Custom Collectibles": "Custom Story Piece",
 };
 
-function CollectionRow({
+function CollectionCard({
   item,
   index,
 }: {
@@ -26,8 +26,8 @@ function CollectionRow({
   const [hovered, setHovered] = useState(false);
   const rx = useMotionValue(0);
   const ry = useMotionValue(0);
-  const srx = useSpring(rx, { stiffness: 200, damping: 20 });
-  const sry = useSpring(ry, { stiffness: 200, damping: 20 });
+  const srx = useSpring(rx, { stiffness: 220, damping: 20 });
+  const sry = useSpring(ry, { stiffness: 220, damping: 20 });
 
   const handleMove = (e: React.MouseEvent) => {
     const el = ref.current;
@@ -35,8 +35,8 @@ function CollectionRow({
     const rect = el.getBoundingClientRect();
     const px = (e.clientX - rect.left) / rect.width - 0.5;
     const py = (e.clientY - rect.top) / rect.height - 0.5;
-    ry.set(px * 4);
-    rx.set(-py * 4);
+    ry.set(px * 5);
+    rx.set(-py * 5);
   };
 
   const handleLeave = () => {
@@ -57,35 +57,38 @@ function CollectionRow({
       onMouseMove={handleMove}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={handleLeave}
-      initial={{ opacity: 0, y: 25 }}
+      initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-10%" }}
       transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1], delay: index * 0.08 }}
-      style={{ rotateX: srx, rotateY: sry, transformStyle: "preserve-3d", transformPerspective: 800 }}
-      className={`group border-b border-porcelain/10 py-8 sm:py-10 md:py-14 flex flex-col md:flex-row items-start md:items-center justify-between gap-5 sm:gap-6 md:gap-10 lg:gap-14 relative cursor-pointer transition-colors duration-300 hover:border-rust/30 w-full overflow-hidden ${
+      style={{ rotateX: srx, rotateY: sry, transformStyle: "preserve-3d", transformPerspective: 900 }}
+      className={`group relative p-7 sm:p-9 md:p-12 rounded-[2rem] sm:rounded-[2.4rem] bg-porcelain/[0.035] hover:bg-rust/[0.14] border border-porcelain/10 hover:border-rust/40 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 sm:gap-8 md:gap-12 cursor-pointer transition-all duration-400 shadow-sm hover:shadow-2xl overflow-hidden ${
         index % 2 === 1 ? "md:flex-row-reverse md:text-right" : ""
       }`}
     >
+      {/* Subtle Ambient Card Glow on Hover */}
+      <div className="absolute inset-0 bg-gradient-to-r from-rust/10 via-transparent to-rust/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+
       {/* Title & Arrow */}
-      <div className={`flex items-center gap-3 sm:gap-4 shrink-0 max-w-full md:max-w-[48%] ${index % 2 === 1 ? "md:justify-end" : ""}`}>
-        <h3 className="font-display font-medium text-3xl sm:text-4xl md:text-4xl lg:text-5xl xl:text-6xl text-porcelain group-hover:text-rust-light transition-colors duration-300 tracking-tight break-words">
+      <div className={`relative z-10 flex items-center gap-3.5 sm:gap-4 shrink-0 max-w-full md:max-w-[48%] ${index % 2 === 1 ? "md:justify-end" : ""}`}>
+        <h3 className="font-display font-medium text-3xl sm:text-4xl md:text-4xl lg:text-5xl xl:text-6xl text-porcelain group-hover:text-rust transition-colors duration-300 tracking-tight break-words">
           {item.title}
         </h3>
         <motion.div
           animate={{
             x: hovered ? 4 : 0,
             y: hovered ? -4 : 0,
-            opacity: hovered ? 1 : 0.35,
+            opacity: hovered ? 1 : 0.4,
           }}
           transition={{ duration: 0.25 }}
           className="text-rust shrink-0"
         >
-          <ArrowUpRight size={24} className="md:w-7 md:h-7" />
+          <ArrowUpRight size={26} className="md:w-8 md:h-8" />
         </motion.div>
       </div>
 
       {/* Description & Action */}
-      <div className={`flex flex-col gap-2.5 sm:gap-3 max-w-full md:max-w-[48%] ${index % 2 === 1 ? "md:items-end" : ""}`}>
+      <div className={`relative z-10 flex flex-col gap-3 sm:gap-3.5 max-w-full md:max-w-[48%] ${index % 2 === 1 ? "md:items-end" : ""}`}>
         <p className="font-display italic font-normal text-base sm:text-lg md:text-lg lg:text-xl text-porcelain/75 group-hover:text-porcelain/90 leading-relaxed transition-colors duration-300">
           {item.description}
         </p>
@@ -93,7 +96,7 @@ function CollectionRow({
           <span className="font-script text-lg sm:text-xl text-sage">
             {item.note}
           </span>
-          <span className="text-[11px] sm:text-xs font-medium tracking-wider uppercase text-porcelain/40 group-hover:text-rust transition-colors underline-offset-4 group-hover:underline">
+          <span className="text-xs font-medium tracking-wider uppercase text-porcelain/40 group-hover:text-rust transition-colors underline-offset-4 group-hover:underline">
             enquire piece &rarr;
           </span>
         </div>
@@ -122,9 +125,10 @@ export default function Collection() {
         </motion.span>
       </div>
 
-      <div className="flex flex-col border-t border-porcelain/10">
+      {/* Cards List with Zero Divider Lines */}
+      <div className="flex flex-col gap-5 sm:gap-6 md:gap-8">
         {collection.map((item, i) => (
-          <CollectionRow key={item.title} item={item} index={i} />
+          <CollectionCard key={item.title} item={item} index={i} />
         ))}
       </div>
     </section>
