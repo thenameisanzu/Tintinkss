@@ -8,7 +8,6 @@ import { site } from "@/lib/content";
 export default function PageLoader() {
   const [visible, setVisible] = useState(true);
   const [progress, setProgress] = useState(0);
-  const [stamped, setStamped] = useState(false);
   const [reduced, setReduced] = useState(false);
 
   useEffect(() => {
@@ -21,7 +20,7 @@ export default function PageLoader() {
 
     document.body.style.overflow = "hidden";
 
-    // Progress counter animation
+    // Progress counter animation from 0 to 100
     const interval = setInterval(() => {
       setProgress((prev) => {
         if (prev >= 100) {
@@ -29,177 +28,146 @@ export default function PageLoader() {
           setTimeout(() => {
             setVisible(false);
             document.body.style.overflow = "";
-          }, 500);
+          }, 450);
           return 100;
         }
-        if (prev >= 45 && !stamped) {
-          setStamped(true);
-        }
-        const increment = prev < 40 ? 4 : prev < 75 ? 3 : 2;
+        const increment = prev < 35 ? 4 : prev < 75 ? 3 : 2;
         return Math.min(prev + increment, 100);
       });
-    }, 36);
+    }, 32);
 
     return () => {
       clearInterval(interval);
       document.body.style.overflow = "";
     };
-  }, [stamped]);
+  }, []);
 
   if (reduced) return null;
+
+  // Format as 2 or 3 digits (e.g. 04, 82, 100)
+  const formattedCount = progress < 10 ? `0${progress}` : `${progress}`;
 
   return (
     <AnimatePresence>
       {visible && (
-        <motion.div
-          initial={{ opacity: 1 }}
-          exit={{
-            opacity: 0,
-            scale: 1.04,
-            filter: "blur(6px)",
-            transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] },
-          }}
-          className="fixed inset-0 z-[200] flex items-center justify-center bg-[#F7F4EE] select-none pointer-events-auto overflow-hidden px-6"
-        >
-          {/* Subtle Ambient Studio Clay Glow */}
-          <div className="absolute w-[500px] h-[500px] bg-rust/10 rounded-full blur-[110px] pointer-events-none" />
-          <div className="absolute w-[300px] h-[300px] bg-sage/15 rounded-full blur-[90px] -bottom-10 -right-10 pointer-events-none" />
-
-          {/* Central Ceramic Sketch & Stamp Container */}
-          <div className="relative flex flex-col items-center max-w-sm w-full">
-            
-            {/* SVG Hand-Drawn Ceramic Vessel & Flora Illustration */}
-            <div className="relative w-44 h-44 sm:w-52 sm:h-52 flex items-center justify-center">
-              
-              <svg
-                viewBox="0 0 200 200"
-                className="w-full h-full absolute inset-0 pointer-events-none drop-shadow-sm overflow-visible"
-              >
-                {/* Outer delicate guide halo */}
-                <motion.circle
-                  cx="100"
-                  cy="100"
-                  r="88"
-                  fill="none"
-                  stroke="#B8542F"
-                  strokeWidth="1"
-                  strokeDasharray="4 6"
-                  strokeOpacity="0.35"
-                  initial={{ rotate: 0 }}
-                  animate={{ rotate: 360 }}
-                  transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-                />
-
-                {/* Hand-drawn Ceramic Vase Outline (Drawn in real-time) */}
-                <motion.path
-                  d="M 68 55 C 68 70, 60 85, 52 110 C 44 135, 56 160, 100 160 C 144 160, 156 135, 148 110 C 140 85, 132 70, 132 55 C 132 48, 120 45, 100 45 C 80 45, 68 48, 68 55 Z"
-                  fill="none"
-                  stroke="#B8542F"
-                  strokeWidth="2.2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  initial={{ pathLength: 0, opacity: 0 }}
-                  animate={{ pathLength: 1, opacity: 0.85 }}
-                  transition={{ duration: 1.6, ease: [0.65, 0, 0.35, 1] }}
-                />
-
-                {/* Botanical Wildflower Stem emerging from vessel */}
-                <motion.path
-                  d="M 100 45 Q 105 25, 115 15 M 104 32 Q 116 30, 120 24 M 98 22 Q 88 18, 86 12"
-                  fill="none"
-                  stroke="#7A8B78"
-                  strokeWidth="1.8"
-                  strokeLinecap="round"
-                  initial={{ pathLength: 0, opacity: 0 }}
-                  animate={{ pathLength: 1, opacity: 0.9 }}
-                  transition={{ delay: 0.4, duration: 1.2, ease: "easeOut" }}
-                />
-
-                {/* Delicate vessel base line */}
-                <motion.path
-                  d="M 80 166 L 120 166"
-                  stroke="#2C2420"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                  strokeOpacity="0.4"
-                  initial={{ pathLength: 0 }}
-                  animate={{ pathLength: 1 }}
-                  transition={{ delay: 0.8, duration: 0.6 }}
-                />
-              </svg>
-
-              {/* Tintinkss Seal Logo - Tactile Ink Stamp Drop */}
+        <div className="fixed inset-0 z-[200] select-none pointer-events-auto overflow-hidden">
+          
+          {/* Staggered Vertical Shutter Columns Exit Reveal */}
+          <div className="absolute inset-0 flex z-0 pointer-events-none">
+            {[0, 1, 2, 3].map((col) => (
               <motion.div
-                initial={{ scale: 0, opacity: 0, y: -20, rotate: -15 }}
-                animate={{
-                  scale: stamped ? 1 : 0,
-                  opacity: stamped ? 1 : 0,
-                  y: stamped ? 0 : -20,
-                  rotate: stamped ? 0 : -15,
+                key={col}
+                initial={{ y: "0%" }}
+                exit={{
+                  y: "-100%",
+                  transition: {
+                    duration: 0.8,
+                    ease: [0.77, 0, 0.175, 1],
+                    delay: col * 0.08,
+                  },
                 }}
-                transition={{
-                  type: "spring",
-                  stiffness: 400,
-                  damping: 22,
-                  mass: 0.8,
-                }}
-                className="relative z-10 w-22 h-22 sm:w-26 sm:h-26 rounded-full bg-porcelain p-1.5 shadow-[0_12px_30px_rgba(184,84,47,0.22)] border-2 border-rust flex items-center justify-center"
-              >
-                {/* Concentric stamp impression ring */}
-                <div className="absolute inset-1 rounded-full border border-rust/40 pointer-events-none" />
+                className="h-full w-1/4 bg-[#1C1613] border-r border-porcelain/5 last:border-r-0"
+              />
+            ))}
+          </div>
 
-                <Image
-                  src="/logo.png"
-                  alt={`${site.name} logo`}
-                  fill
-                  sizes="(max-width: 768px) 88px, 104px"
-                  priority
-                  className="object-cover rounded-full p-0.5"
-                />
-              </motion.div>
+          {/* Main Editorial Content Layer */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{
+              opacity: 0,
+              scale: 0.96,
+              transition: { duration: 0.35, ease: "easeOut" },
+            }}
+            className="absolute inset-0 z-10 flex flex-col justify-between p-6 md:p-12 text-porcelain"
+          >
+            {/* Ambient Warm Kiln Core Glow */}
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-rust/15 rounded-full blur-[140px] pointer-events-none" />
+
+            {/* Top Bar Metadata */}
+            <div className="flex items-center justify-between font-mono text-[10px] md:text-xs tracking-widest uppercase text-porcelain/50">
+              <div className="flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-rust animate-pulse" />
+                <span>9°35&apos;29&quot;N 76°31&apos;20&quot;E</span>
+              </div>
+              <div className="hidden sm:block text-center tracking-[0.2em] text-porcelain/70">
+                TINTINKSS ATELIER &bull; KOTTAYAM
+              </div>
+              <div>ARCHIVE 2026</div>
             </div>
 
-            {/* Brand Title & Handwritten Details */}
-            <motion.div
-              initial={{ opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.5, duration: 0.6 }}
-              className="mt-5 text-center flex flex-col items-center"
-            >
-              <div className="flex items-baseline justify-center gap-2 font-display text-3xl sm:text-4xl text-kiln font-medium tracking-tight">
-                <span>{site.name}</span>
-                <span className="font-script text-rust text-2xl sm:text-3xl lowercase">by jia</span>
-              </div>
-              <span className="font-script text-xl sm:text-2xl text-rust/90 mt-1">
-                handmade slowly in Kottayam
-              </span>
-            </motion.div>
+            {/* Center Monolith Counter & Monogram */}
+            <div className="relative flex flex-col items-center justify-center my-auto">
+              
+              {/* Logo Emblem Pill */}
+              <motion.div
+                initial={{ scale: 0.8, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                transition={{ duration: 0.6 }}
+                className="flex items-center gap-3 bg-porcelain/5 border border-porcelain/10 backdrop-blur-md px-4 py-2 rounded-full mb-6 shadow-xl"
+              >
+                <div className="relative w-7 h-7 rounded-full overflow-hidden border border-rust/40">
+                  <Image
+                    src="/logo.png"
+                    alt={site.name}
+                    fill
+                    sizes="28px"
+                    className="object-cover"
+                  />
+                </div>
+                <span className="font-display font-medium tracking-tight text-sm text-porcelain/90">
+                  {site.name} <span className="font-script text-rust text-base">by jia</span>
+                </span>
+              </motion.div>
 
-            {/* Minimal Progress Line & Milestone */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.3, duration: 0.5 }}
-              className="mt-6 w-full max-w-[220px] flex flex-col items-center"
-            >
-              <div className="w-full h-1 bg-clay-200 rounded-full overflow-hidden relative">
+              {/* Giant Serif Monolith Counter */}
+              <div className="flex items-baseline justify-center tracking-tighter">
+                <span className="font-display font-light text-8xl sm:text-9xl md:text-[12rem] lg:text-[14rem] text-porcelain leading-none select-none drop-shadow-2xl">
+                  {formattedCount}
+                </span>
+                <span className="font-mono text-xl sm:text-2xl md:text-3xl text-rust font-light ml-2">
+                  %
+                </span>
+              </div>
+
+              {/* Dynamic Status Tagline */}
+              <div className="mt-4 flex items-center gap-3">
+                <span className="h-[1px] w-8 bg-rust/50" />
+                <span className="font-script text-2xl md:text-3xl text-rust-light">
+                  {progress < 40
+                    ? "throwing raw stoneware..."
+                    : progress < 80
+                    ? "firing kiln to temperature..."
+                    : "finishing handcrafted studio drop..."}
+                </span>
+                <span className="h-[1px] w-8 bg-rust/50" />
+              </div>
+            </div>
+
+            {/* Bottom Timeline & Footer */}
+            <div className="w-full flex flex-col gap-3">
+              {/* Ultra Thin Hairline Loader */}
+              <div className="w-full h-[2px] bg-porcelain/10 rounded-full overflow-hidden relative">
                 <motion.div
                   className="h-full bg-rust rounded-full relative"
                   style={{ width: `${progress}%` }}
                   transition={{ ease: "easeOut" }}
                 >
-                  <div className="absolute right-0 top-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-rust-light shadow-[0_0_6px_rgba(224,114,75,0.9)]" />
+                  <div className="absolute right-0 top-1/2 -translate-y-1/2 w-3 h-3 rounded-full bg-rust-light shadow-[0_0_10px_rgba(224,114,75,1)]" />
                 </motion.div>
               </div>
 
-              <div className="w-full flex items-center justify-between mt-2 font-serif italic text-xs text-kiln/60">
-                <span>Small batch ceramics</span>
-                <span className="font-mono font-medium text-rust text-xs">{progress}%</span>
+              <div className="flex items-center justify-between text-xs font-mono text-porcelain/50">
+                <span className="font-script text-lg text-porcelain/70 capitalize">
+                  everything here was mud once
+                </span>
+                <span>SYSTEM READY // 2026</span>
               </div>
-            </motion.div>
+            </div>
 
-          </div>
-        </motion.div>
+          </motion.div>
+        </div>
       )}
     </AnimatePresence>
   );
