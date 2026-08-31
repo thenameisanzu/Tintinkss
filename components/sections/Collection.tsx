@@ -80,14 +80,15 @@ function CollectionCard({
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 50, scale: 0.97 }}
+      initial={{ opacity: 0, y: 40, scale: 0.93 }}
       whileInView={{ opacity: 1, y: 0, scale: 1 }}
       viewport={{ once: true, margin: "-6%" }}
       transition={{
-        duration: 0.85,
-        ease: [0.22, 1, 0.36, 1],
-        delay: index * 0.1,
+        duration: 0.75,
+        ease: [0.16, 1, 0.3, 1],
+        delay: index * 0.08,
       }}
+      whileTap={{ scale: 0.98 }}
       className="w-full"
     >
       <motion.div

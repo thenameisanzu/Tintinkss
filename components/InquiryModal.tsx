@@ -139,37 +139,42 @@ ${brief || "Hi Jia, I have a question regarding your pottery and collection."}
   return (
     <AnimatePresence>
       {isOpen && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6 overflow-y-auto">
-          {/* Backdrop */}
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-3 sm:p-6 overflow-y-auto">
+          {/* Backdrop with Silky Fade */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
+            transition={{ duration: 0.35, ease: "easeOut" }}
             onClick={closeModal}
-            className="fixed inset-0 bg-kiln/70 backdrop-blur-md"
+            className="fixed inset-0 bg-kiln/75 backdrop-blur-md"
           />
 
-          {/* Modal Container */}
+          {/* Modal Container with Super Smooth Spring Pop-up */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.94, y: 20 }}
+            initial={{ opacity: 0, scale: 0.88, y: 35 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.94, y: 20 }}
-            transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-            className="relative w-full max-w-2xl bg-porcelain rounded-[2.5rem_1.25rem_2.5rem_1.25rem] shadow-2xl border border-kiln/10 overflow-hidden z-10 my-8 text-kiln"
+            exit={{ opacity: 0, scale: 0.92, y: 25 }}
+            transition={{
+              type: "spring",
+              damping: 26,
+              stiffness: 320,
+              mass: 0.75,
+            }}
+            className="relative w-full max-w-2xl bg-porcelain rounded-[2rem_1rem_2rem_1rem] sm:rounded-[2.5rem_1.25rem_2.5rem_1.25rem] shadow-2xl border border-kiln/10 overflow-hidden z-10 my-auto text-kiln"
             role="dialog"
             aria-modal="true"
           >
             {/* Top decorative texture header */}
-            <div className="bg-kiln text-porcelain px-6 sm:px-8 py-6 relative overflow-hidden">
+            <div className="bg-kiln text-porcelain px-5 sm:px-8 py-5 sm:py-6 relative overflow-hidden">
               <div className="flex items-center justify-between relative z-10">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-full bg-rust/30 flex items-center justify-center text-rust">
-                    <Sparkles size={20} />
+                <div className="flex items-center gap-2.5 sm:gap-3">
+                  <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-rust/30 flex items-center justify-center text-rust shrink-0">
+                    <Sparkles size={18} className="sm:w-5 sm:h-5" />
                   </div>
                   <div>
-                    <span className="font-script text-xl text-rust">Tintinkss Studio</span>
-                    <h2 className="font-display font-medium text-2xl sm:text-3xl leading-tight">
+                    <span className="font-script text-lg sm:text-xl text-rust">Tintinkss Studio</span>
+                    <h2 className="font-display font-medium text-xl sm:text-3xl leading-tight">
                       {activeTab === "commission"
                         ? "Start a Custom Brief"
                         : activeTab === "visit"
@@ -181,24 +186,24 @@ ${brief || "Hi Jia, I have a question regarding your pottery and collection."}
 
                 <button
                   onClick={closeModal}
-                  className="w-9 h-9 rounded-full bg-porcelain/10 hover:bg-porcelain/20 text-porcelain flex items-center justify-center transition-colors"
+                  className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-porcelain/10 hover:bg-porcelain/20 text-porcelain flex items-center justify-center transition-colors shrink-0"
                   aria-label="Close dialog"
                 >
-                  <X size={20} />
+                  <X size={18} className="sm:w-5 sm:h-5" />
                 </button>
               </div>
 
-              {/* Tab navigation */}
-              <div className="flex gap-2 mt-5 border-t border-porcelain/15 pt-4">
+              {/* Tab navigation - Mobile scrollable & touch friendly */}
+              <div className="flex gap-1.5 sm:gap-2 mt-4 sm:mt-5 border-t border-porcelain/15 pt-3.5 sm:pt-4 overflow-x-auto no-scrollbar">
                 <button
                   type="button"
                   onClick={() => {
                     setActiveTab("commission");
                     setIsSubmitted(false);
                   }}
-                  className={`px-3.5 py-1.5 rounded-full text-xs font-medium transition-all ${
+                  className={`px-3 sm:px-3.5 py-1.5 rounded-full text-xs font-medium transition-all whitespace-nowrap shrink-0 ${
                     activeTab === "commission"
-                      ? "bg-rust text-porcelain shadow-sm"
+                      ? "bg-rust text-porcelain shadow-sm scale-105"
                       : "bg-porcelain/10 text-porcelain/70 hover:text-porcelain"
                   }`}
                 >
@@ -210,9 +215,9 @@ ${brief || "Hi Jia, I have a question regarding your pottery and collection."}
                     setActiveTab("visit");
                     setIsSubmitted(false);
                   }}
-                  className={`px-3.5 py-1.5 rounded-full text-xs font-medium transition-all ${
+                  className={`px-3 sm:px-3.5 py-1.5 rounded-full text-xs font-medium transition-all whitespace-nowrap shrink-0 ${
                     activeTab === "visit"
-                      ? "bg-rust text-porcelain shadow-sm"
+                      ? "bg-rust text-porcelain shadow-sm scale-105"
                       : "bg-porcelain/10 text-porcelain/70 hover:text-porcelain"
                   }`}
                 >
@@ -224,9 +229,9 @@ ${brief || "Hi Jia, I have a question regarding your pottery and collection."}
                     setActiveTab("general");
                     setIsSubmitted(false);
                   }}
-                  className={`px-3.5 py-1.5 rounded-full text-xs font-medium transition-all ${
+                  className={`px-3 sm:px-3.5 py-1.5 rounded-full text-xs font-medium transition-all whitespace-nowrap shrink-0 ${
                     activeTab === "general"
-                      ? "bg-rust text-porcelain shadow-sm"
+                      ? "bg-rust text-porcelain shadow-sm scale-105"
                       : "bg-porcelain/10 text-porcelain/70 hover:text-porcelain"
                   }`}
                 >
@@ -236,7 +241,7 @@ ${brief || "Hi Jia, I have a question regarding your pottery and collection."}
             </div>
 
             {/* Modal Body */}
-            <div className="p-6 sm:p-8 max-h-[75vh] overflow-y-auto">
+            <div className="p-5 sm:p-8 max-h-[78vh] sm:max-h-[75vh] overflow-y-auto">
               {isSubmitted ? (
                 <div className="py-8 px-4 text-center flex flex-col items-center">
                   <div className="w-16 h-16 rounded-full bg-sage/30 text-sage-800 flex items-center justify-center mb-4">
