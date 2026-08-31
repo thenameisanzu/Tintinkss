@@ -59,7 +59,15 @@ export default function Footer() {
               className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full bg-porcelain/10 hover:bg-porcelain/20 text-porcelain text-xs font-medium border border-porcelain/20 transition-colors"
             >
               <WhatsAppIcon size={14} className="text-[#25D366]" />
-              <span>WhatsApp</span>
+              <span>{site.whatsappDisplay}</span>
+            </a>
+
+            <a
+              href={`tel:${site.whatsapp.replace(/[^0-9]/g, "")}`}
+              data-cursor-hover
+              className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full bg-porcelain/10 hover:bg-porcelain/20 text-porcelain text-xs font-medium border border-porcelain/20 transition-colors"
+            >
+              <span>Call: {site.phoneDisplay}</span>
             </a>
 
             <a

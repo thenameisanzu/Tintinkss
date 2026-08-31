@@ -3,8 +3,10 @@ export const site = {
   tagline: "by Jia",
   location: "Kottayam, Kerala",
   instagram: "https://www.instagram.com/tintinkss/",
-  whatsapp: "919446000000", // Update with actual studio number
-  whatsappDisplay: "+91 WhatsApp",
+  whatsapp: "917947138846",
+  whatsappDisplay: "+91 7947138846",
+  phone: "+91 7947138846",
+  phoneDisplay: "+91 7947138846",
   email: "jia@tintinkss.com",
   founder: "Jia Susan Joseph",
 };
