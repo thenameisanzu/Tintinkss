@@ -24,6 +24,7 @@ function CollectionCard({
   const { openModal } = useInquiryModal();
   const ref = useRef<HTMLDivElement>(null);
   const [hovered, setHovered] = useState(false);
+  const [entryPos, setEntryPos] = useState({ x: 200, y: 100 });
 
   // 3D Tilt Values
   const rx = useMotionValue(0);
@@ -31,9 +32,9 @@ function CollectionCard({
   const srx = useSpring(rx, { stiffness: 220, damping: 20 });
   const sry = useSpring(ry, { stiffness: 220, damping: 20 });
 
-  // Radial Reveal Cursor Tracking Values
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
+  // Radial Spotlight Follower
+  const mouseX = useMotionValue(200);
+  const mouseY = useMotionValue(100);
   const smoothX = useSpring(mouseX, { damping: 25, stiffness: 300 });
   const smoothY = useSpring(mouseY, { damping: 25, stiffness: 300 });
 
@@ -49,16 +50,19 @@ function CollectionCard({
 
     const px = x / rect.width - 0.5;
     const py = y / rect.height - 0.5;
-    ry.set(px * 5);
-    rx.set(-py * 5);
+    ry.set(px * 4);
+    rx.set(-py * 4);
   };
 
   const handleMouseEnter = (e: React.MouseEvent) => {
     const el = ref.current;
     if (el) {
       const rect = el.getBoundingClientRect();
-      mouseX.set(e.clientX - rect.left);
-      mouseY.set(e.clientY - rect.top);
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      setEntryPos({ x, y });
+      mouseX.set(x);
+      mouseY.set(y);
     }
     setHovered(true);
   };
@@ -85,29 +89,48 @@ function CollectionCard({
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-10%" }}
       transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1], delay: index * 0.08 }}
+      animate={{
+        scale: hovered ? 1.022 : 1,
+        y: hovered ? -4 : 0,
+      }}
       style={{ rotateX: srx, rotateY: sry, transformStyle: "preserve-3d", transformPerspective: 900 }}
-      className={`group relative p-7 sm:p-9 md:p-12 rounded-[2rem] sm:rounded-[2.4rem] bg-porcelain/[0.035] border border-porcelain/10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 sm:gap-8 md:gap-12 cursor-pointer transition-all duration-400 shadow-sm hover:shadow-2xl overflow-hidden ${
+      className={`group relative p-7 sm:p-9 md:p-12 rounded-[2rem] sm:rounded-[2.4rem] bg-porcelain/[0.035] border border-porcelain/10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 sm:gap-8 md:gap-12 cursor-pointer transition-all duration-300 shadow-sm hover:shadow-[0_25px_60px_rgba(184,84,47,0.35)] hover:border-rust/60 overflow-hidden ${
         index % 2 === 1 ? "md:flex-row-reverse md:text-right" : ""
       }`}
     >
-      {/* Dynamic Cursor-Tracking Radial Spotlight Reveal */}
+      {/* Expanding Full-Color Radial Fill Bloom (from Cursor Entry Point) */}
       <motion.div
-        className="pointer-events-none absolute -inset-px rounded-[2rem] sm:rounded-[2.4rem] opacity-0 group-hover:opacity-100 transition-opacity duration-400"
+        initial={false}
+        animate={{
+          clipPath: hovered
+            ? `circle(160% at ${entryPos.x}px ${entryPos.y}px)`
+            : `circle(0% at ${entryPos.x}px ${entryPos.y}px)`,
+          opacity: hovered ? 1 : 0,
+        }}
+        transition={{
+          duration: 0.55,
+          ease: [0.16, 1, 0.3, 1],
+        }}
+        className="pointer-events-none absolute inset-0 rounded-[2rem] sm:rounded-[2.4rem] bg-gradient-to-br from-[#C45E36] via-[#B8542F] to-[#983D1C] shadow-[inset_0_0_80px_rgba(0,0,0,0.25)]"
+      />
+
+      {/* Dynamic Cursor-Following Radial Spotlight Highlight */}
+      <motion.div
+        className="pointer-events-none absolute inset-0 rounded-[2rem] sm:rounded-[2.4rem] opacity-0 group-hover:opacity-100 transition-opacity duration-300"
         style={{
           background: useMotionTemplate`
             radial-gradient(
-              550px circle at ${smoothX}px ${smoothY}px,
-              rgba(184, 84, 47, 0.22),
-              rgba(184, 84, 47, 0.06) 40%,
-              transparent 80%
+              450px circle at ${smoothX}px ${smoothY}px,
+              rgba(255, 255, 255, 0.15),
+              transparent 70%
             )
           `,
         }}
       />
 
-      {/* Radial Border Highlight Spotlight */}
+      {/* Radial Border Spotlight */}
       <motion.div
-        className="pointer-events-none absolute -inset-px rounded-[2rem] sm:rounded-[2.4rem] border-2 border-rust/70 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+        className="pointer-events-none absolute -inset-px rounded-[2rem] sm:rounded-[2.4rem] border-2 border-white/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
         style={{
           maskImage: useMotionTemplate`
             radial-gradient(
@@ -128,17 +151,18 @@ function CollectionCard({
 
       {/* Title & Arrow */}
       <div className={`relative z-10 flex items-center gap-3.5 sm:gap-4 shrink-0 max-w-full md:max-w-[48%] ${index % 2 === 1 ? "md:justify-end" : ""}`}>
-        <h3 className="font-display font-medium text-3xl sm:text-4xl md:text-4xl lg:text-5xl xl:text-6xl text-porcelain group-hover:text-rust transition-colors duration-300 tracking-tight break-words">
+        <h3 className="font-display font-medium text-3xl sm:text-4xl md:text-4xl lg:text-5xl xl:text-6xl text-porcelain group-hover:text-white transition-all duration-300 tracking-tight break-words group-hover:drop-shadow-sm">
           {item.title}
         </h3>
         <motion.div
           animate={{
-            x: hovered ? 4 : 0,
-            y: hovered ? -4 : 0,
+            x: hovered ? 5 : 0,
+            y: hovered ? -5 : 0,
+            scale: hovered ? 1.15 : 1,
             opacity: hovered ? 1 : 0.4,
           }}
           transition={{ duration: 0.25 }}
-          className="text-rust shrink-0"
+          className="text-rust group-hover:text-white shrink-0 transition-colors"
         >
           <ArrowUpRight size={26} className="md:w-8 md:h-8" />
         </motion.div>
@@ -146,14 +170,14 @@ function CollectionCard({
 
       {/* Description & Action */}
       <div className={`relative z-10 flex flex-col gap-3 sm:gap-3.5 max-w-full md:max-w-[48%] ${index % 2 === 1 ? "md:items-end" : ""}`}>
-        <p className="font-display italic font-normal text-base sm:text-lg md:text-lg lg:text-xl text-porcelain/75 group-hover:text-porcelain/90 leading-relaxed transition-colors duration-300">
+        <p className="font-display italic font-normal text-base sm:text-lg md:text-lg lg:text-xl text-porcelain/75 group-hover:text-porcelain leading-relaxed transition-colors duration-300">
           {item.description}
         </p>
         <div className="flex items-center gap-3 pt-0.5">
-          <span className="font-script text-lg sm:text-xl text-sage">
+          <span className="font-script text-lg sm:text-xl text-sage group-hover:text-bisque transition-colors">
             {item.note}
           </span>
-          <span className="text-xs font-medium tracking-wider uppercase text-porcelain/40 group-hover:text-rust transition-colors underline-offset-4 group-hover:underline">
+          <span className="text-xs font-medium tracking-wider uppercase text-porcelain/50 group-hover:text-white group-hover:bg-white/20 px-3 py-1 rounded-full backdrop-blur-sm transition-all duration-300 underline-offset-4">
             enquire piece &rarr;
           </span>
         </div>
