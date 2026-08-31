@@ -1,7 +1,9 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
+import { site } from "@/lib/content";
 
 export default function PageLoader() {
   const [visible, setVisible] = useState(true);
@@ -18,7 +20,7 @@ export default function PageLoader() {
     const t = setTimeout(() => {
       setVisible(false);
       document.body.style.overflow = "";
-    }, 1900);
+    }, 2000);
     return () => clearTimeout(t);
   }, []);
 
@@ -29,45 +31,79 @@ export default function PageLoader() {
       {visible && (
         <motion.div
           initial={{ opacity: 1 }}
-          exit={{ opacity: 0, transition: { duration: 0.5, ease: "easeInOut" } }}
-          className="fixed inset-0 z-[200] flex items-center justify-center bg-kiln"
+          exit={{ opacity: 0, transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] } }}
+          className="fixed inset-0 z-[200] flex items-center justify-center bg-kiln select-none overflow-hidden"
         >
+          {/* Ambient warm glow */}
+          <div className="absolute w-80 h-80 bg-rust/20 rounded-full blur-3xl pointer-events-none" />
+
           <div className="relative flex flex-col items-center">
-            <motion.div
-              className="relative w-24 h-24 md:w-32 md:h-32"
-              animate={{ rotate: 360 }}
-              transition={{ duration: 1.6, repeat: Infinity, ease: "linear" }}
-            >
-              <svg viewBox="0 0 100 100" className="w-full h-full">
-                <motion.circle
-                  cx="50"
-                  cy="50"
-                  r="42"
-                  fill="none"
-                  stroke="#B8542F"
-                  strokeWidth="2.5"
-                  strokeDasharray="264"
-                  initial={{ strokeDashoffset: 264 }}
-                  animate={{ strokeDashoffset: 0 }}
-                  transition={{ duration: 1.5, ease: [0.65, 0, 0.35, 1] }}
-                />
-              </svg>
+            {/* Center Logo with Animated Potter's Wheel Ring */}
+            <div className="relative flex items-center justify-center">
+              {/* Outer Spinning Ring */}
               <motion.div
-                className="absolute inset-0 flex items-center justify-center"
-                animate={{ rotate: -360 }}
-                transition={{ duration: 1.6, repeat: Infinity, ease: "linear" }}
+                className="absolute w-28 h-28 md:w-36 md:h-36 -inset-2 md:-inset-3 pointer-events-none"
+                animate={{ rotate: 360 }}
+                transition={{ duration: 2.2, repeat: Infinity, ease: "linear" }}
               >
-                <div className="w-4 h-4 rounded-full bg-rust" />
+                <svg viewBox="0 0 100 100" className="w-full h-full">
+                  <motion.circle
+                    cx="50"
+                    cy="50"
+                    r="46"
+                    fill="none"
+                    stroke="#B8542F"
+                    strokeWidth="2"
+                    strokeDasharray="220 70"
+                    initial={{ strokeDashoffset: 290 }}
+                    animate={{ strokeDashoffset: 0 }}
+                    transition={{ duration: 1.5, ease: [0.65, 0, 0.35, 1] }}
+                  />
+                  <circle
+                    cx="50"
+                    cy="50"
+                    r="46"
+                    fill="none"
+                    stroke="#EFEBE4"
+                    strokeWidth="1"
+                    strokeOpacity="0.2"
+                  />
+                </svg>
               </motion.div>
-            </motion.div>
-            <motion.p
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.4, duration: 0.6 }}
-              className="font-script text-2xl text-porcelain/80 mt-6"
+
+              {/* Logo Container */}
+              <motion.div
+                initial={{ scale: 0.8, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+                className="relative w-20 h-20 md:w-24 md:h-24 rounded-full overflow-hidden shadow-2xl border-2 border-porcelain/30 bg-kiln-dark p-1"
+              >
+                <Image
+                  src="/logo.png"
+                  alt={`${site.name} logo`}
+                  fill
+                  sizes="(max-width: 768px) 80px, 96px"
+                  priority
+                  className="object-cover rounded-full"
+                />
+              </motion.div>
+            </div>
+
+            {/* Brand Title */}
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3, duration: 0.6 }}
+              className="mt-6 flex flex-col items-center text-center"
             >
-              throwing the page...
-            </motion.p>
+              <div className="flex items-baseline gap-1.5 font-display text-2xl md:text-3xl text-porcelain tracking-tight font-medium">
+                <span>{site.name}</span>
+                <span className="font-script text-rust text-xl md:text-2xl lowercase">by jia</span>
+              </div>
+              <span className="font-script text-lg md:text-xl text-porcelain/60 mt-1">
+                throwing the page...
+              </span>
+            </motion.div>
           </div>
         </motion.div>
       )}

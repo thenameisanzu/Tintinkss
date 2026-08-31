@@ -302,7 +302,7 @@ export const instagramPhotos = [
     tag: "@tintinkss",
   },
   {
-    image: "/instagram/insta-shot-01.png",
+    image: "/instagram/insta-shot-01.jpg",
     alt: "Tintinkss studio ceramic creation",
     tag: "@tintinkss",
   },
@@ -312,17 +312,17 @@ export const instagramPhotos = [
     tag: "@tintinkss",
   },
   {
-    image: "/instagram/insta-shot-02.png",
+    image: "/instagram/insta-shot-02.jpg",
     alt: "Tintinkss handmade ceramic drop",
     tag: "@tintinkss",
   },
   {
-    image: "/instagram/floral-blossom-mug.png",
+    image: "/instagram/floral-blossom-mug.jpg",
     alt: "Hand holding a white ceramic mug painted with delicate floral blossoms",
     tag: "@tintinkss",
   },
   {
-    image: "/instagram/insta-shot-03.png",
+    image: "/instagram/insta-shot-03.jpg",
     alt: "Handcrafted pottery details",
     tag: "@tintinkss",
   },
@@ -332,7 +332,7 @@ export const instagramPhotos = [
     tag: "@tintinkss",
   },
   {
-    image: "/instagram/insta-shot-04.png",
+    image: "/instagram/insta-shot-04.jpg",
     alt: "Clay studio process moment",
     tag: "@tintinkss",
   },
@@ -342,7 +342,7 @@ export const instagramPhotos = [
     tag: "@tintinkss",
   },
   {
-    image: "/instagram/insta-shot-05.png",
+    image: "/instagram/insta-shot-05.jpg",
     alt: "Tintinkss handmade collection",
     tag: "@tintinkss",
   },
@@ -352,7 +352,7 @@ export const instagramPhotos = [
     tag: "@tintinkss",
   },
   {
-    image: "/instagram/insta-shot-06.png",
+    image: "/instagram/insta-shot-06.jpg",
     alt: "Ceramic keepsake details",
     tag: "@tintinkss",
   },
@@ -362,7 +362,7 @@ export const instagramPhotos = [
     tag: "@tintinkss",
   },
   {
-    image: "/instagram/insta-shot-07.png",
+    image: "/instagram/insta-shot-07.jpg",
     alt: "Tintinkss pottery archive",
     tag: "@tintinkss",
   },
@@ -372,42 +372,42 @@ export const instagramPhotos = [
     tag: "@tintinkss",
   },
   {
-    image: "/instagram/insta-shot-08.png",
+    image: "/instagram/insta-shot-08.jpg",
     alt: "Wheel-thrown glazed ceramics",
     tag: "@tintinkss",
   },
   {
-    image: "/instagram/insta-shot-09.png",
+    image: "/instagram/insta-shot-09.jpg",
     alt: "Tintinkss ceramic craft",
     tag: "@tintinkss",
   },
   {
-    image: "/instagram/insta-shot-10.png",
+    image: "/instagram/insta-shot-10.jpg",
     alt: "Handmade ceramic pottery drop",
     tag: "@tintinkss",
   },
   {
-    image: "/instagram/insta-shot-11.png",
+    image: "/instagram/insta-shot-11.jpg",
     alt: "Tintinkss studio moments",
     tag: "@tintinkss",
   },
   {
-    image: "/instagram/insta-shot-12.png",
+    image: "/instagram/insta-shot-12.jpg",
     alt: "Handmade ceramic keepsakes",
     tag: "@tintinkss",
   },
   {
-    image: "/instagram/insta-shot-13.png",
+    image: "/instagram/insta-shot-13.jpg",
     alt: "Tintinkss glazed pottery",
     tag: "@tintinkss",
   },
   {
-    image: "/instagram/insta-shot-14.png",
+    image: "/instagram/insta-shot-14.jpg",
     alt: "Wheel-thrown ceramics in Kottayam",
     tag: "@tintinkss",
   },
   {
-    image: "/instagram/insta-shot-15.png",
+    image: "/instagram/insta-shot-15.jpg",
     alt: "Tintinkss custom pottery works",
     tag: "@tintinkss",
   },
