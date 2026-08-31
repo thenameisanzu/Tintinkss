@@ -14,7 +14,7 @@ export default function FAQ() {
       <div className="max-w-3xl mx-auto">
         <div className="mb-14 text-center">
           <span className="font-script text-2xl text-rust">Good to know</span>
-          <h2 className="font-display font-medium text-huge text-kiln mt-2 leading-[0.9]">
+          <h2 className="font-display font-medium text-huge text-kiln mt-2 leading-[0.98] py-1">
             <SplitText text="Questions" />
           </h2>
         </div>

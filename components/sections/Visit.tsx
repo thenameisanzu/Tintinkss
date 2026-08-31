@@ -46,7 +46,7 @@ export default function Visit() {
       <div className="relative grid md:grid-cols-[1fr_1fr] gap-12 md:gap-20 items-center">
         <div>
           <span className="font-script text-2xl text-rust">{visit.kicker}</span>
-          <h2 className="font-display font-medium text-huge mt-2 leading-[0.9]">
+          <h2 className="font-display font-medium text-huge mt-2 leading-[0.98] py-1">
             <SplitText text="The wheel lives" />
             <br />
             <SplitText text="in Kottayam." delay={0.1} />

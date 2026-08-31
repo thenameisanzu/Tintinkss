@@ -25,7 +25,7 @@ export default function ArtistStory() {
           >
             {artistStory.kicker}
           </motion.span>
-          <h2 className="font-display font-medium text-huge mt-2 leading-[0.92]">
+          <h2 className="font-display font-medium text-huge mt-2 leading-[0.98] py-1">
             <SplitText text={artistStory.name.split(" ")[0]} />
             <br />
             <SplitText text={artistStory.name.split(" ").slice(1).join(" ")} delay={0.1} />

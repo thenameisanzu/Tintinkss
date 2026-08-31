@@ -33,9 +33,9 @@ export default function Commissions() {
           >
             {commissions.kicker}
           </motion.span>
-          <h2 className="font-display font-medium text-huge text-kiln mt-2 leading-[0.9]">
+          <h2 className="font-display font-medium text-huge text-kiln mt-2 leading-[0.98] py-1">
             {lines.map((l, i) => (
-              <div key={i} className="block">
+              <div key={i} className="block py-0.5">
                 <SplitText text={l} delay={i * 0.1} />
               </div>
             ))}

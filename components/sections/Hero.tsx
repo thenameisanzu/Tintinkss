@@ -66,12 +66,12 @@ export default function Hero() {
 
       <motion.div style={{ y: yHeadline, opacity: opacityFade, scale: scaleFade }} className="relative z-10">
         {lines.map((l, i) => (
-          <div key={i} className="overflow-visible">
+          <div key={i} className="overflow-visible py-0.5">
             <SplitText
               text={l}
               delay={1.6 + i * 0.25}
               viewport={false}
-              className="font-display font-medium text-mega leading-[0.88] text-kiln"
+              className="font-display font-medium text-mega leading-[0.98] text-kiln"
             />
           </div>
         ))}

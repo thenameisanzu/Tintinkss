@@ -10,7 +10,7 @@ const container: Variants = {
 };
 
 const word: Variants = {
-  hidden: { y: "115%", rotate: 4 },
+  hidden: { y: "135%", rotate: 4 },
   show: {
     y: "0%",
     rotate: 0,
@@ -43,7 +43,10 @@ export default function SplitText({
       className={`inline-block ${className}`}
     >
       {words.map((w, i) => (
-        <span key={i} className="inline-block overflow-hidden pb-[0.08em] mr-[0.22em] align-bottom">
+        <span
+          key={i}
+          className="inline-block overflow-hidden pt-[0.12em] -mt-[0.12em] pb-[0.35em] -mb-[0.35em] mr-[0.22em] align-bottom"
+        >
           <motion.span variants={word} className="inline-block">
             {w}
           </motion.span>

@@ -90,7 +90,7 @@ export default function Gallery() {
             >
               Studio Archive & Works
             </motion.span>
-            <h2 className="font-display font-medium text-huge text-kiln leading-[0.94]">
+            <h2 className="font-display font-medium text-huge text-kiln leading-[0.98] py-1">
               <SplitText text="Made Slowly," />
               <br />
               <SplitText text="By Hand." delay={0.1} />

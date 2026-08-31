@@ -104,7 +104,7 @@ export default function Collection() {
   return (
     <section id="collection" className="bg-kiln px-6 md:px-10 py-24 md:py-32">
       <div className="flex items-end justify-between mb-16 md:mb-24">
-        <h2 className="font-display font-medium text-huge text-porcelain leading-[0.9]">
+        <h2 className="font-display font-medium text-huge text-porcelain leading-[0.98] py-1">
           <SplitText text="The" />
           <br />
           <SplitText text="Collection" delay={0.08} />
