@@ -74,7 +74,7 @@ export default function PageLoader() {
                     delay: col * 0.08,
                   },
                 }}
-                className="h-full w-1/4 bg-[#1C1613] border-r border-porcelain/5 last:border-r-0"
+                className="h-full w-[25.2%] -mr-[0.2%] bg-[#1C1613]"
               />
             ))}
           </div>
