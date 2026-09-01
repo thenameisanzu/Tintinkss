@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import { motion, useMotionValue, useSpring, useMotionTemplate } from "framer-motion";
 import { collection } from "@/lib/content";
 import SplitText from "@/components/SplitText";
@@ -26,7 +26,9 @@ function CollectionCard({
   const [hovered, setHovered] = useState(false);
   const [entryPos, setEntryPos] = useState({ x: 200, y: 100 });
 
-  // Ultra-Smooth 3D Tilt Spring Physics
+  const [isFinePointer, setIsFinePointer] = useState(false);
+
+  // Ultra-Smooth 3D Tilt Spring Physics (Desktop only)
   const rx = useMotionValue(0);
   const ry = useMotionValue(0);
   const srx = useSpring(rx, { stiffness: 160, damping: 24, mass: 0.7 });
@@ -38,7 +40,14 @@ function CollectionCard({
   const smoothX = useSpring(mouseX, { stiffness: 200, damping: 28, mass: 0.6 });
   const smoothY = useSpring(mouseY, { stiffness: 200, damping: 28, mass: 0.6 });
 
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      setIsFinePointer(window.matchMedia("(pointer: fine)").matches);
+    }
+  }, []);
+
   const handleMove = (e: React.MouseEvent) => {
+    if (!isFinePointer) return;
     const el = ref.current;
     if (!el) return;
     const rect = el.getBoundingClientRect();
@@ -55,6 +64,7 @@ function CollectionCard({
   };
 
   const handleMouseEnter = (e: React.MouseEvent) => {
+    if (!isFinePointer) return;
     const el = ref.current;
     if (el) {
       const rect = el.getBoundingClientRect();
@@ -68,6 +78,7 @@ function CollectionCard({
   };
 
   const handleLeave = () => {
+    if (!isFinePointer) return;
     rx.set(0);
     ry.set(0);
     setHovered(false);
@@ -105,7 +116,11 @@ function CollectionCard({
           duration: 0.45,
           ease: [0.22, 1, 0.36, 1],
         }}
-        style={{ rotateX: srx, rotateY: sry, transformStyle: "preserve-3d", transformPerspective: 1000 }}
+        style={
+          isFinePointer
+            ? { rotateX: srx, rotateY: sry, transformStyle: "preserve-3d", transformPerspective: 1000 }
+            : undefined
+        }
         className={`group relative p-7 sm:p-9 md:p-12 rounded-[2rem] sm:rounded-[2.4rem] bg-porcelain/[0.035] border border-porcelain/10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 sm:gap-8 md:gap-12 cursor-pointer shadow-sm hover:shadow-[0_30px_70px_rgba(184,84,47,0.32)] hover:border-rust/60 overflow-hidden ${
           index % 2 === 1 ? "md:flex-row-reverse md:text-right" : ""
         }`}

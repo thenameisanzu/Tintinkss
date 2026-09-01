@@ -19,11 +19,11 @@ function MarqueeRow({
   const row = [...items, ...items, ...items];
 
   return (
-    <motion.div
-      className="flex gap-4 md:gap-6 w-max will-change-transform"
-      style={{ transform: "translateZ(0)" }}
-      animate={{ x: direction === 1 ? ["0%", "-33.333%"] : ["-33.333%", "0%"] }}
-      transition={{ duration, ease: "linear", repeat: Infinity }}
+    <div
+      className={`flex gap-4 md:gap-6 w-max gpu-layer ${
+        direction === 1 ? "animate-marquee-left" : "animate-marquee-right"
+      }`}
+      style={{ animationDuration: `${duration}s` }}
     >
       {row.map((item, i) => (
         <motion.a
@@ -52,7 +52,7 @@ function MarqueeRow({
           </div>
         </motion.a>
       ))}
-    </motion.div>
+    </div>
   );
 }
 
