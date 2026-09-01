@@ -20,6 +20,36 @@ export default function Nav() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  const scrollToSection = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    if (href.startsWith("#")) {
+      e.preventDefault();
+      const targetId = href.substring(1);
+      if (targetId === "top") {
+        if (typeof window !== "undefined" && (window as any).__lenis) {
+          (window as any).__lenis.scrollTo(0, { duration: 1.2 });
+        } else {
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        }
+        return;
+      }
+
+      const element = document.getElementById(targetId);
+      if (element) {
+        if (typeof window !== "undefined" && (window as any).__lenis) {
+          (window as any).__lenis.scrollTo(element, { offset: -70, duration: 1.2 });
+        } else {
+          const headerOffset = 70;
+          const elementPosition = element.getBoundingClientRect().top;
+          const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+          window.scrollTo({
+            top: offsetPosition,
+            behavior: "smooth",
+          });
+        }
+      }
+    }
+  };
+
   return (
     <>
       <header
@@ -31,6 +61,7 @@ export default function Nav() {
           {/* Brand Logo & Name */}
           <a
             href="#top"
+            onClick={(e) => scrollToSection(e, "#top")}
             data-cursor-hover
             className="flex items-center gap-2 sm:gap-2.5 md:gap-3 text-base md:text-lg lg:text-xl tracking-tight text-kiln group whitespace-nowrap shrink-0"
           >
@@ -56,6 +87,7 @@ export default function Nav() {
               <a
                 key={item.href}
                 href={item.href}
+                onClick={(e) => scrollToSection(e, item.href)}
                 data-cursor-hover
                 className="group relative text-xs md:text-[13px] lg:text-sm font-medium text-kiln/80 hover:text-rust transition-colors py-1 whitespace-nowrap"
               >
@@ -134,7 +166,12 @@ export default function Nav() {
                 <motion.a
                   key={item.href}
                   href={item.href}
-                  onClick={() => setOpen(false)}
+                  onClick={(e) => {
+                    setOpen(false);
+                    setTimeout(() => {
+                      scrollToSection(e, item.href);
+                    }, 250);
+                  }}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.15 + i * 0.06 }}
