@@ -21,7 +21,7 @@ export default function CustomCursor() {
       cx.set(e.clientX);
       cy.set(e.clientY);
     };
-    window.addEventListener("mousemove", move);
+    window.addEventListener("mousemove", move, { passive: true });
 
     const onOver = (e: MouseEvent) => {
       const target = e.target as HTMLElement;
@@ -31,8 +31,8 @@ export default function CustomCursor() {
       const target = e.target as HTMLElement;
       if (target.closest("a, button, [data-cursor-hover]")) setHovering(false);
     };
-    document.addEventListener("mouseover", onOver);
-    document.addEventListener("mouseout", onOut);
+    document.addEventListener("mouseover", onOver, { passive: true });
+    document.addEventListener("mouseout", onOut, { passive: true });
 
     return () => {
       window.removeEventListener("mousemove", move);

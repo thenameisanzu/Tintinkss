@@ -20,7 +20,8 @@ function MarqueeRow({
 
   return (
     <motion.div
-      className="flex gap-4 md:gap-6 w-max"
+      className="flex gap-4 md:gap-6 w-max will-change-transform"
+      style={{ transform: "translateZ(0)" }}
       animate={{ x: direction === 1 ? ["0%", "-33.333%"] : ["-33.333%", "0%"] }}
       transition={{ duration, ease: "linear", repeat: Infinity }}
     >
